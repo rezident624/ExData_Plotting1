@@ -1,0 +1,10 @@
+Sys.setlocale("LC_TIME","English_United States.1252")
+data <- read.table('household_power_consumption.txt', header=TRUE, sep=';', stringsAsFactors = FALSE, na.strings = '?', comment.char="", nrow = 100000)
+d <- as.Date(data$Date, format = '%d/%m/%Y')
+d1 <- as.Date('2007-02-01')
+d2 <- as.Date('2007-02-02')
+data <- data[d >= d1 & d <= d2,]
+data$datetime <- strptime(paste(data$Date, data$Time), format = '%d/%m/%Y %H:%M:%S')
+png('plot2.png', bg = "transparent")
+plot(data$datetime, data$Global_active_power, type = 'l', xlab = '', ylab = 'Global Active Power (kilowatts)')
+dev.off()
